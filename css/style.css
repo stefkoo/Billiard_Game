@@ -1,14 +1,17 @@
-body {
-	margin: 0;
-	background-color: #ffbb00;
-	color: #fff;
-	font-family: Monospace;
-	font-size: 13px;
-	line-height: 24px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    background-color: #111;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+}
 
 canvas {
-	display: block;
-	background-color: #004;
+    margin-top: 50px;
+    border-radius: 55px;
 }
