@@ -1,4 +1,4 @@
-import {ctx} from "./canvas.js";
+import {canvas, ctx, margin} from "./canvas.js";
  
 //Klasse Ball, wird object erzeugt mit pos
 export class Ball {
@@ -8,7 +8,13 @@ export class Ball {
         // Wenn ich das nicht übergeben bekomme ist x,y =0
         this.vel = vel ?? {x:0, y:0};
         this.size = 18;
+        this.friction = 0.99;
     }
+
+    get idle(){
+        return this.vel.x == 0 && this.vel.y == 0;
+    }
+
     draw() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
@@ -20,7 +26,40 @@ export class Ball {
     update() {
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
+        this.vel.x *= this.friction;
+        this.vel.y *= this.friction;
+        this.bounceOfWalls();
+        this.handleTinyVelocities();
+        //console.log(this.vel.x)
     }
 
+    bounceOfWalls(){
+    //horizontale Kollis
+    if (this.pos.x + this.size >= canvas.width - margin){
+        this.pos.x = canvas.width - margin -this.size;
+        this.vel.x *= -1;
+    } else if (this.pos.x - this.size <= margin){
+        this.pos.x = this.size + margin;
+        this.vel.x *= -1;
+    }
+    // Vertikal
+    if (this.pos.y + this.size >= canvas.height - margin){
+        this.pos.y = canvas.height - margin -this.size;
+        this.vel.y *= -1;
+    } else if (this.pos.y - this.size <= margin){
+        this.pos.y = this.size + margin;
+        this.vel.y *= -1;
+        }
 
+    }
+
+    handleTinyVelocities(){
+        const threshold = 0.04;
+        if (Math.abs(this.vel.x) < threshold) {
+            this.vel.x = 0;
+        }
+        if (Math.abs(this.vel.y) < threshold) {
+            this.vel.y = 0;
+        }
+    }
 }
