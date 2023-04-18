@@ -1,6 +1,6 @@
 import { ctx, margin, canvas } from "./canvas.js";
 import { add, sub, scale, dotProduct, distance } from "./math.js";
-
+// hallo
 export class Ball {
     constructor({ pos, color, vel }) {
         this.pos = pos;
