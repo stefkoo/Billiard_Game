@@ -1,5 +1,5 @@
 import { canvasNorm, ctx } from "./canvas.js";
-import { scale, sub } from "./math.js";
+import { normalize, scale, sub, limit } from "./math.js";
 import { mouse } from "./mouse.js";
 
 
@@ -9,6 +9,7 @@ export class Controller {
         this.vector = {x:0,y:0};
         this.addControl()
         this.active = true;
+        this.maxLength = 300;
     }
 
     addControl(){
@@ -21,8 +22,8 @@ export class Controller {
     }
 
     update() {
-        console.log(this.vector)
-        this.vector = sub(mouse, this.ball.pos);
+        //console.log(this.vector)
+        this.vector = limit(this.maxLength,sub(mouse, this.ball.pos));
     }
 
     draw() {
@@ -35,17 +36,14 @@ export class Controller {
         ctx.translate(this.ball.pos.x, this.ball.pos.y)
         ctx.beginPath();
         ctx.moveTo(0,0);
-        ctx.lineTo(mouse.x, mouse.y);
+        ctx.lineTo(this.vector.x, this.vector.y);
         ctx.stroke();
         ctx.closePath();
         //thin line
         ctx.lineWidth = 1;
-        ctx.moveTo(this.ball.pos.x, this.ball.pos.y);
-        const vectorLength = Math.sqrt(this.vector.x * this.vector.x + this.vector.y * this.vector.y);
-        ctx.lineTo(
-            this.ball.pos.x + canvasNorm/vectorLength * this.vector.x,
-            this.ball.pos.y + canvasNorm/vectorLength * this.vector.y
-            );
+        ctx.moveTo(0,0);
+        const targetFar = scale(canvasNorm,normalize(this.vector));
+        ctx.lineTo(targetFar.x, targetFar.y);
         ctx.stroke();
         ctx.restore();
     }
