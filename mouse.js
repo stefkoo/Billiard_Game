@@ -5,11 +5,8 @@ export const mouse = {
     y: 0,
 };
 
-window.addEventListener("mousemove",e => {
+window.addEventListener("mousemove", (e) => {
     const rect = canvas.getBoundingClientRect();
     mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
     mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
-
-    //console.log(mouse);
-
 });
