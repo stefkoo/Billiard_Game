@@ -10,7 +10,7 @@ export function drawCloth(){
 export function drawWood(){
     ctx.fillStyle = "hsl(16,76%,30%)";
     ctx.fillRect(0,0,canvas.width,margin)
-    //Höhe - Margin, um oberes Holz zu zeichene
+    //Höhe - Margin, um oberes Holz zu zeichnen
     ctx.fillRect(0,canvas.height - margin,canvas.width,margin)
     ctx.fillRect(0,0,margin, canvas.height);
     ctx.fillRect(canvas.width-margin, 0, margin, canvas.height);
