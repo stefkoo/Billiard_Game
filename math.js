@@ -1,4 +1,4 @@
-// addition of two vectors
+// addition of two vector
 export function add(v, w) {
     return { x: v.x + w.x, y: v.y + w.y };
 }
