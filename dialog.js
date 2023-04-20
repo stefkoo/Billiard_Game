@@ -4,12 +4,19 @@ const closeBtn = document.getElementById("closeBtn");
 
 export function openDialog(txt) {
     dialogContent.innerHTML = txt;
-    dialogElement.open = true;
+    dialogElement.showModal();
 }
 
 export function closeDialog() {
-    dialogElement.open = false;
+    dialogElement.close();
     dialogContent.innerHTML = "";
 }
 
-closeBtn.addEventListener("click", closeDialog);
+dialogElement.addEventListener("touchmove", function(e) {
+    e.preventDefault();
+}, {passive: false});
+
+closeBtn.addEventListener("touchstart", function(e) {
+    closeDialog();
+    e.preventDefault();
+}, {passive: false});

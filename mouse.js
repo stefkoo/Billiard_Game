@@ -5,8 +5,8 @@ export const mouse = {
     y: 0,
 };
 
-window.addEventListener("mousemove", (e) => {
+canvas.addEventListener("touchmove", (e) => {
     const rect = canvas.getBoundingClientRect();
-    mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
-    mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    mouse.x = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
+    mouse.y = (e.touches[0].clientY - rect.top) * (canvas.height / rect.height);
 });

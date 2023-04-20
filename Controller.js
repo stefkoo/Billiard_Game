@@ -12,15 +12,43 @@ export class Controller {
     }
 
     addControl() {
-        document.addEventListener("click", (e) => {
-            if (e.target.nodeName == "BUTTON" || !this.active) return;
-            this.active = false;
-            const factor = 0.15;
-            this.ball.vel = scale(factor, this.vector);
-        });
+        // Touch-Events hinzufügen
+        document.addEventListener("touchstart", this.onTouchStart.bind(this), { passive: false });
+        document.addEventListener("touchmove", this.onTouchMove.bind(this), { passive: false });
+        document.addEventListener("touchend", this.onTouchEnd.bind(this), { passive: false });
+    }
+
+    onTouchStart(e) {
+        // Touch-Event-Handler für Berührung aufnehmen
+        if (e.target.nodeName == "BUTTON" || !this.active) return;
+        this.active = false;
+        const factor = 0.15;
+        this.ball.vel = scale(factor, this.vector);
+        e.preventDefault();
+    }
+
+    onTouchMove(e) {
+        // Touch-Event-Handler für Bewegung aufnehmen
+        e.preventDefault();
+        if (!this.active) return;
+        const touch = e.touches[0];
+        const touchPos = { x: touch.clientX, y: touch.clientY };
+        this.vector = limit(
+            this.maxLength,
+            sub(touchPos, this.ball.pos)
+        );
+    }
+
+    onTouchEnd(e) {
+        // Touch-Event-Handler für Ende aufnehmen
+        if (e.target.nodeName == "BUTTON") return;
+        this.active = true;
+        e.preventDefault();
     }
 
     update() {
+        // Funktion für Aktualisierung
+        // Hier wird nichts geändert
         this.vector = limit(
             this.maxLength,
             sub(mouse, this.ball.pos)
